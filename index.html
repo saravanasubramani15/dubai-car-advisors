@@ -21,7 +21,9 @@ section{display:none}section.active{display:block}.notice{border:1px solid #5745
 table{width:100%;border-collapse:collapse;font-size:13px}td,th{padding:11px 8px;border-bottom:1px solid var(--line);text-align:left}th{color:var(--gold)}.fav{float:right;background:none;color:var(--gold);padding:3px;font-size:20px}
 footer{color:#777;text-align:center;font-size:11px;margin:30px 0}
 @media(min-width:650px){main{padding-top:24px}.hero{padding:30px}.hero h1{font-size:36px}}
-</style></head>
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
 <body>
 <header><div class="brand">DCA / UAE AUTOMOTIVE</div><div class="brandname">Dubai Car Advisors</div><div class="tag">EXPLORE. LEARN. DRIVE.</div></header>
 <main>
@@ -39,7 +41,14 @@ footer{color:#777;text-align:center;font-size:11px;margin:30px 0}
 </main>
 <nav><button class="active" onclick="show('home',this)"><span>⌂</span>Home</button><button onclick="show('cars',this)"><span>🚘</span>Explore</button><button onclick="show('compare',this)"><span>⇄</span>Compare</button><button onclick="show('news',this)"><span>▤</span>News</button><button onclick="show('saved',this)"><span>♡</span>Saved</button></nav>
 <script>
-const cars=[
+const SUPABASE_URL = 'https://tataurjabpvmvaiflcaz.supabase.co';
+
+const SUPABASE_KEY = 'YOUR_ACTUAL_sb_publishable_lTHZ5sfGI0lKBN85prfeXg_-YQYF87u
+
+const supabaseClient = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);const cars=[
 {id:'toyota-rav4',make:'Toyota',model:'RAV4 Hybrid',fuel:'Hybrid',price:119900,hp:'219 hp',drive:'AWD available',range:'Hybrid',engine:'2.5L hybrid',type:'SUV'},
 {id:'byd-song',make:'BYD',model:'Song Plus DM-i',fuel:'PHEV',price:109900,hp:'To verify',drive:'FWD',range:'Plug-in hybrid',engine:'DM-i PHEV',type:'SUV'},
 {id:'tesla-model-y',make:'Tesla',model:'Model Y',fuel:'BEV',price:174990,hp:'To verify',drive:'RWD / AWD',range:'Electric',engine:'Dual/Single motor',type:'SUV'},
