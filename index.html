@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#090909"><title>Dubai Car Advisors</title>
+<style>
+:root{--bg:#090909;--panel:#151515;--panel2:#1d1d1d;--gold:#d6ad55;--muted:#a7a7a7;--line:#303030;--white:#f7f5ef}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--white);font:15px system-ui,-apple-system,Segoe UI,sans-serif}
+header{padding:22px 18px 15px;background:linear-gradient(135deg,#17130a,#090909 70%);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
+.brand{color:var(--gold);font-size:12px;letter-spacing:3px;font-weight:800}.brandname{font-size:23px;font-weight:800;margin-top:3px}.tag{color:var(--muted);font-size:11px;letter-spacing:2px;margin-top:3px}
+main{max-width:850px;margin:auto;padding:18px 16px 95px}.hero{border:1px solid #5b4824;border-radius:18px;padding:22px;background:radial-gradient(circle at 90% 10%,#47381c,#19150d 40%,#111 80%);margin-bottom:20px}
+.eyebrow{color:var(--gold);font-size:11px;letter-spacing:2px;font-weight:800}.hero h1{font-size:27px;line-height:1.1;margin:9px 0}.hero p{color:#c6c1b5;max-width:470px;line-height:1.5;margin-bottom:16px}
+button,.btn{background:var(--gold);color:#17130a;border:0;border-radius:10px;padding:11px 14px;font-weight:800;cursor:pointer}.secondary{background:#252525;color:var(--white);border:1px solid #444}.tabs{display:flex;gap:8px;overflow:auto;margin:18px 0}.tab{white-space:nowrap;background:#191919;color:#aaa;border:1px solid var(--line);padding:9px 14px;border-radius:30px}.tab.active{background:var(--gold);color:#17130a;border-color:var(--gold)}
+h2{font-size:19px;margin:22px 0 12px}.muted{color:var(--muted)}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:14px}.car-art{height:105px;border-radius:10px;background:linear-gradient(135deg,#292929,#111);display:flex;align-items:center;justify-content:center;font-size:42px;margin-bottom:12px}.card h3{margin:4px 0;font-size:16px}.price{color:var(--gold);font-weight:800;margin:8px 0}.specs{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin:12px 0}.spec{background:#202020;border-radius:8px;padding:8px}.spec small{display:block;color:var(--muted);font-size:10px}.spec b{font-size:13px}
+input,select{width:100%;background:#171717;color:white;border:1px solid #414141;border-radius:10px;padding:12px;margin:7px 0 12px;font:inherit}
+.row{display:flex;gap:8px;align-items:center}.row>*{flex:1}.newsitem{display:flex;gap:12px;margin:10px 0}.newsicon{min-width:64px;height:64px;border-radius:10px;background:#282318;display:grid;place-items:center;font-size:25px}.newsitem p{font-size:13px;color:var(--muted);margin:5px 0}.label{font-size:10px;color:var(--gold);letter-spacing:1px;font-weight:800}
+nav{position:fixed;bottom:0;left:0;right:0;background:#111;border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:9px 4px calc(9px + env(safe-area-inset-bottom));z-index:10}
+nav button{background:transparent;color:#aaa;padding:5px;font-size:11px;display:flex;flex-direction:column;gap:3px;align-items:center}nav button.active{color:var(--gold)}nav span{font-size:19px}
+section{display:none}section.active{display:block}.notice{border:1px solid #574522;background:#1c180f;padding:10px 12px;border-radius:10px;color:#d7c69f;font-size:12px;line-height:1.45;margin:12px 0}
+table{width:100%;border-collapse:collapse;font-size:13px}td,th{padding:11px 8px;border-bottom:1px solid var(--line);text-align:left}th{color:var(--gold)}.fav{float:right;background:none;color:var(--gold);padding:3px;font-size:20px}
+footer{color:#777;text-align:center;font-size:11px;margin:30px 0}
+@media(min-width:650px){main{padding-top:24px}.hero{padding:30px}.hero h1{font-size:36px}}
+</style></head>
+<body>
+<header><div class="brand">DCA / UAE AUTOMOTIVE</div><div class="brandname">Dubai Car Advisors</div><div class="tag">EXPLORE. LEARN. DRIVE.</div></header>
+<main>
+<section id="home" class="active">
+<div class="hero"><div class="eyebrow">THE UAE CAR GUIDE</div><h1>Choose smarter.<br>Drive better.</h1><p>Explore new cars, understand the technology and compare the details that matter before you buy.</p><button onclick="show('compare')">Compare vehicles →</button></div>
+<div class="notice">Preview version: vehicle data and news below are sample content for demonstrating the app. Confirm specifications, prices and availability with UAE dealers before making a purchase.</div>
+<h2>Popular comparisons</h2><div class="grid" id="featured"></div>
+<h2>Latest automotive updates</h2><div id="homeNews"></div>
+</section>
+<section id="cars"><h2>Explore cars</h2><input id="search" placeholder="Search make or model…" oninput="renderCars()"><div class="row"><select id="fuel" onchange="renderCars()"><option value="">All powertrains</option><option>Petrol</option><option>Hybrid</option><option>PHEV</option><option>BEV</option></select><select id="sort" onchange="renderCars()"><option value="name">Sort: name</option><option value="price">Price: low to high</option></select></div><div id="carList" class="grid"></div></section>
+<section id="compare"><h2>Compare vehicles</h2><p class="muted">Choose two vehicles to view their specifications side by side.</p><label>Vehicle one</label><select id="one" onchange="renderCompare()"></select><label>Vehicle two</label><select id="two" onchange="renderCompare()"></select><div id="comparison"></div></section>
+<section id="news"><h2>Automotive news & insights</h2><p class="muted">UAE launches, EVs, hybrids and car technology.</p><div class="tabs"><button class="tab active" onclick="filterNews('All',this)">All</button><button class="tab" onclick="filterNews('UAE',this)">UAE</button><button class="tab" onclick="filterNews('EV',this)">EV</button><button class="tab" onclick="filterNews('Technology',this)">Technology</button></div><div id="newsList"></div><div class="notice">News feed is demo content in this first build. Live publisher feeds and automatic updates can be connected in the next stage using permitted RSS/API sources.</div></section>
+<section id="saved"><h2>Saved vehicles</h2><div id="savedList"></div></section>
+<footer>Dubai Car Advisors · UAE-first automotive guide<br>Independent information platform · Not affiliated with vehicle manufacturers</footer>
+</main>
+<nav><button class="active" onclick="show('home',this)"><span>⌂</span>Home</button><button onclick="show('cars',this)"><span>🚘</span>Explore</button><button onclick="show('compare',this)"><span>⇄</span>Compare</button><button onclick="show('news',this)"><span>▤</span>News</button><button onclick="show('saved',this)"><span>♡</span>Saved</button></nav>
+<script>
+const cars=[
+{id:'toyota-rav4',make:'Toyota',model:'RAV4 Hybrid',fuel:'Hybrid',price:119900,hp:'219 hp',drive:'AWD available',range:'Hybrid',engine:'2.5L hybrid',type:'SUV'},
+{id:'byd-song',make:'BYD',model:'Song Plus DM-i',fuel:'PHEV',price:109900,hp:'To verify',drive:'FWD',range:'Plug-in hybrid',engine:'DM-i PHEV',type:'SUV'},
+{id:'tesla-model-y',make:'Tesla',model:'Model Y',fuel:'BEV',price:174990,hp:'To verify',drive:'RWD / AWD',range:'Electric',engine:'Dual/Single motor',type:'SUV'},
+{id:'exeed-rx',make:'EXEED',model:'RX PHEV',fuel:'PHEV',price:129999,hp:'To verify by trim',drive:'To verify',range:'Plug-in hybrid',engine:'1.5T PHEV',type:'SUV'},
+{id:'nissan-xtrail',make:'Nissan',model:'X-Trail',fuel:'Petrol',price:ப்ப, hp:'To verify',drive:'FWD / AWD',range:'Petrol',engine:'2.5L petrol',type:'SUV'},
+{id:'geely-monjaro',make:'Geely',model:'Monjaro',fuel:'Petrol',price:129900,hp:'To verify',drive:'AWD',range:'Petrol',engine:'2.0T petrol',type:'SUV'}
+].map(c=>({...c,price:Number.isFinite(c.price)?c.price:109900}));
+const articles=[
+{cat:'UAE',icon:'🇦🇪',title:'UAE new-car market: what buyers should compare before choosing',desc:'A practical checklist covering warranty, service packages, insurance and trim-level differences.'},
+{cat:'EV',icon:'⚡',title:'EV vs PHEV vs REEV: understanding the key differences',desc:'How charging habits, daily distance and long journeys influence the right powertrain choice.'},
+{cat:'Technology',icon:'🔋',title:'What to check when comparing electric-car batteries',desc:'Look beyond headline range: battery capacity, charging speed, thermal management and warranty matter.'},
+{cat:'UAE',icon:'🚙',title:'New model buying guide: compare the full ownership package',desc:'Compare on-road price, service intervals, roadside assistance and resale considerations.'}
+];
+let favorites=JSON.parse(localStorage.getItem('dca-favs')||'[]');
+function money(n){return 'AED '+n.toLocaleString('en-US')}
+function carCard(c){return `<article class="card"><button class="fav" onclick="toggleFav('${c.id}')">${favorites.includes(c.id)?'♥':'♡'}</button><div class="car-art">🚘</div><div class="label">${c.make.toUpperCase()} · ${c.fuel.toUpperCase()}</div><h3>${c.model}</h3><div class="price">From ${money(c.price)}*</div><div class="muted">${c.type} · UAE guide</div><button class="secondary" style="width:100%;margin-top:12px" onclick="pickCompare('${c.id}')">Add to compare</button></article>`}
+function renderCars(){let q=(document.getElementById('search')?.value||'').toLowerCase(),f=document.getElementById('fuel')?.value||'',s=document.getElementById('sort')?.value||'name';let a=cars.filter(c=>(c.make+' '+c.model).toLowerCase().includes(q)&&(!f||c.fuel===f));if(s==='price')a.sort((x,y)=>x.price-y.price);else a.sort((x,y)=>x.make.localeCompare(y.make));document.getElementById('carList').innerHTML=a.map(carCard).join('')||'<p class="muted">No matching vehicles.</p>'}
+function renderCompare(){let a=cars.find(c=>c.id===document.getElementById('one').value),b=cars.find(c=>c.id===document.getElementById('two').value);if(!a||!b)return;let rows=[['Make / model',c=>c.make+' '+c.model],['Indicative price',c=>money(c.price)+'*'],['Powertrain',c=>c.fuel],['Power',c=>c.hp],['Drivetrain',c=>c.drive],['Engine / motor',c=>c.engine],['Vehicle type',c=>c.type]];document.getElementById('comparison').innerHTML=`<div class="card" style="margin-top:15px;overflow:auto"><table><tr><th>Specification</th><th>${a.model}</th><th>${b.model}</th></tr>${rows.map(r=>`<tr><td>${r[0]}</td><td>${r[1](a)}</td><td>${r[1](b)}</td></tr>`).join('')}</table></div><p class="muted" style="font-size:11px">*Illustrative starting prices only; not verified live dealer quotations. Trim and market specifications may differ.</p>`}
+function setupCompare(){['one','two'].forEach((id,i)=>{document.getElementById(id).innerHTML=cars.map(c=>`<option value="${c.id}" ${c.id===(i?'byd-song':'toyota-rav4')?'selected':''}>${c.make} ${c.model}</option>`).join('')});renderCompare()}
+function pickCompare(id){document.getElementById('one').value=id;show('compare');renderCompare()}
+function toggleFav(id){favorites=favorites.includes(id)?favorites.filter(x=>x!==id):[...favorites,id];localStorage.setItem('dca-favs',JSON.stringify(favorites));renderCars();renderFeatured();renderSaved()}
+function renderFeatured(){document.getElementById('featured').innerHTML=cars.slice(0,2).map(carCard).join('')}
+function renderSaved(){let a=cars.filter(c=>favorites.includes(c.id));document.getElementById('savedList').innerHTML=a.length?a.map(carCard).join(''):'<p class="muted">Your saved vehicles will appear here. Tap ♡ on any vehicle to save it.</p>'}
+function articleHTML(a){return `<div class="card newsitem"><div class="newsicon">${a.icon}</div><div><div class="label">${a.cat} · EDITORIAL</div><b>${a.title}</b><p>${a.desc}</p></div></div>`}
+function renderNews(filter='All'){document.getElementById('newsList').innerHTML=articles.filter(a=>filter==='All'||a.cat===filter).map(articleHTML).join('')}
+function filterNews(f,el){document.querySelectorAll('.tabs .tab').forEach(x=>x.classList.remove('active'));el.classList.add('active');renderNews(f)}
+function show(id,btn){document.querySelectorAll('main section').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('nav button').forEach(x=>x.classList.remove('active'));if(btn)btn.classList.add('active');else [...document.querySelectorAll('nav button')].find(x=>x.textContent.toLowerCase().includes(id==='cars'?'explore':id))?.classList.add('active');if(id==='cars')renderCars();if(id==='saved')renderSaved();window.scrollTo(0,0)}
+document.getElementById('homeNews').innerHTML=articles.slice(0,2).map(articleHTML).join('');
+renderFeatured();renderCars();renderNews();setupCompare();renderSaved();
+</script></body></html>
